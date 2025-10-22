@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pengaturan Profil</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <div class="container">
+    <form action="/settings" method="POST" enctype="multipart/form-data" class="form-card">
+      <h2>Pengaturan Profil</h2>
+      <input type="text" name="name" value="<%= profile.name %>" placeholder="Nama" required>
+      <input type="text" name="desc" value="<%= profile.desc %>" placeholder="Deskripsi" required>
+      <label style="color: var(--secondary); font-size: 13px;">Foto Profil (jpg)</label>
+      <input type="file" name="profile" accept="image/*">
+      <button type="submit">Simpan</button>
+      <a href="/" class="desc">← Kembali</a>
+    </form>
+  </div>
+</body>
+</html>
+

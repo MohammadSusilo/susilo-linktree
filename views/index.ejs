@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= profile.name %></title>
+  <link rel="stylesheet" href="/style.css">
+  <script defer src="/script.js"></script>
+</head>
+<body>
+  <button class="toggle-theme">🌓</button>
+
+  <div class="container">
+    <div class="card">
+      <img src="<%= profile.profile %>" class="profile" />
+      <h1><%= profile.name %></h1>
+      <p class="desc"><%= profile.desc %></p>
+
+      <div class="links">
+        <% if (links.length === 0) { %>
+          <p class="desc">Belum ada link</p>
+        <% } else { %>
+          <% links.forEach(l => { %>
+            <div class="link-item">
+              <a href="<%= l.url %>" target="_blank" class="btn"><%= l.title %></a>
+              <form action="/delete/<%= l.id %>" method="POST" class="delete-form">
+                <button type="submit" class="delete-btn">❌</button>
+              </form>
+            </div>
+          <% }) %>
+        <% } %>
+      </div>
+
+      <div class="bottom-links">
+        <a href="/add">+ Tambah Link</a>
+        <a href="/settings">⚙️ Pengaturan</a>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
+
