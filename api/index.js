@@ -4,6 +4,9 @@ const fs = require("fs");
 const path = require("path");
 const multer = require("multer");
 
+const { createClient } = require("@supabase/supabase-js");
+const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_KEY);
+
 const app = express();
 
 app.set("view engine", "ejs");
@@ -41,19 +44,19 @@ function saveProfile(profile) {
 }
 
 // Routes
-app.get("/", (req, res) => {
-  res.render("index", { profile: getProfile(), links: getLinks() });
+app.get("/", async (req, res) => {
+  const { data: links } = await supabase.from("links").select("*");
+  res.render("index", { profile: getProfile(), links });
 });
 
 app.get("/add", (req, res) => res.render("add"));
-app.post("/add", (req, res) => {
+app.post("/add", async (req, res) => {
   const { title, url } = req.body;
-  const links = getLinks();
   const id = Date.now().toString();
-  links.push({ id, title, url });
-  saveLinks(links);
+  await supabase.from("links").insert([{ id, title, url }]);
   res.redirect("/");
 });
+
 
 app.post("/delete/:id", (req, res) => {
   const id = req.params.id;
